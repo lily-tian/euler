@@ -8,10 +8,12 @@
  * 
  * Find the largest palindrome made from the product of 
  * two 3-digit numbers.
+ * 
+ * Required class: LilyCalcs
  */
 
 public class Problem4 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		// stores largest palindrome
 		int palindrome = 0;
@@ -24,18 +26,11 @@ public class Problem4 {
 
 				// if product greater than current palindrome
 				if (product > palindrome) {
-					String s = Integer.toString(product);
-
-					// checks if palindrome
-					boolean isPalindrome = true;
-					int max = s.length();
-					for (int index = 0; index < max / 2; index++) {
-						if (s.charAt(index) != s.charAt(max - index - 1))
-							isPalindrome = false;
-					}
 
 					// if palindrome, update
-					if (isPalindrome)
+					String s = Integer.toString(product);
+					LilyCalcs calc = new LilyCalcs();
+					if (calc.isPalindrome(s))
 						palindrome = product;
 				}
 			}

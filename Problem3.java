@@ -5,10 +5,12 @@
  * The prime factors of 13195 are 5, 7, 13, and 29.
  * 
  * What is the largest prime factor of 600851475143?
+ * 
+ * Required class: LilyCalcs
  */
 
 public class Problem3 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		// starts with number
 		long num = 600851475143L;
@@ -18,20 +20,14 @@ public class Problem3 {
 
 		// divides the number
 		for (int i = 1; i <= num; i++) {
-			
+
 			// finds factors
 			if (num % i == 0) {
 				num /= i;
-				
-				// checks if factor is prime
-				boolean isprime = true;
-				for (int j = 2; j < i; j++) {
-					if (i % j == 0)
-						isprime = false;
-				}
-				
-				// saves largest prime thus far
-				if (isprime)
+
+				// if prime, saves largest prime thus far
+				LilyCalcs n = new LilyCalcs();
+				if (n.isPrime(i))
 					prime = i;
 			}
 		}

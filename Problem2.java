@@ -17,7 +17,7 @@ public class Problem2 {
 		// stores the sum thus far; starts with 2
 		int sum = 2;
 
-		// initiates two fibonacci and the third
+		// initializes two fibonacci and the third
 		int i = 1;
 		int j = 2;
 		int k = 0;
