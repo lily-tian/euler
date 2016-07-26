@@ -41,24 +41,29 @@ public class LilyCalcs {
 			throw new Exception("String must be at least one character long.");
 	}
 
-	// converts character to number
+	// converts character to integer
 	public static int toInt(char c) {
 		int n = Character.getNumericValue(c);
 		return n;
 	}
 
-	// converts string to number
+	// converts string to integer
 	public static int toInt(String s) {
 		int n = Integer.parseInt(s);
 		return n;
 	}
 
-	// converts int to long
+	// converts integer to long
 	public static long toLong(int n) {
 		long l = Long.valueOf(n);
 		return l;
 	}
 
+	// converts double to integer
+	public static int toInt(double d) {
+		return (int) d;
+	}
+	
 	public static void main(String[] args) throws Exception {
 
 		LilyCalcs calc = new LilyCalcs();
