@@ -1,15 +1,15 @@
 /* Author: lily.tian
- * Project Euler: Problem 3
- * Largest Prime Factor
- * 
+ * Project Euler: Problem 003
+ * Largest prime factor
+ *
  * The prime factors of 13195 are 5, 7, 13, and 29.
- * 
+ *
  * What is the largest prime factor of 600851475143?
- * 
- * Required class: LilyCalcs
+ *
+ * Dependencies: LilyCalcs
  */
 
-public class Problem3 {
+public class Problem003 {
 	public static void main(String[] args) throws Exception{
 
 		// starts with number

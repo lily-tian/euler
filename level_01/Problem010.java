@@ -1,15 +1,15 @@
 /* Author: lily.tian
- * Project Euler: Problem 10
- * Summation of Primes
- * 
+ * Project Euler: Problem 010
+ * Summation of primes
+ *
  * The summation of primes below 10 is 2 + 3 + 5 + 7 = 17.
- * 
+ *
  * Find the sum of all primes below two million.
- * 
- * Required class: LilyCalcs
+ *
+ * Dependencies: LilyCalcs
  */
 
-public class Problem10 {
+public class Problem010 {
 	public static void main(String[] args) throws Exception {
 
 		// initializes summation of primes and max prime n

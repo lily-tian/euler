@@ -1,15 +1,15 @@
 /* Author: lily.tian
- * Project Euler: Problem 5
- * Smallest Multiple
- * 
+ * Project Euler: Problem 005
+ * Smallest multiple
+ *
  * 2520 is the smallest number that can be divided by each
  * of the numbers from 1 to 10 without any remainder.
- * 
+ *
  * What is the smallest possible number that is evenly
  * divisible by all the numbers from 1 to 20?
  */
 
-public class Problem5 {
+public class Problem005 {
 	public static void main(String[] args) {
 
 		// smallest possible number

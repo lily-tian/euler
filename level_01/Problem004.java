@@ -1,18 +1,18 @@
 /* Author: lily.tian
- * Project Euler: Problem 4
- * Largest Palindrome Product
- * 
- * A palindromic number reads the same both ways. The 
+ * Project Euler: Problem 004
+ * Largest palindrome product
+ *
+ * A palindromic number reads the same both ways. The
  * largest palindrome made from the product of two 2-digit
  * numbers is 9009 = 91 x 99.
- * 
- * Find the largest palindrome made from the product of 
+ *
+ * Find the largest palindrome made from the product of
  * two 3-digit numbers.
- * 
- * Required class: LilyCalcs
+ *
+ * Dependencies: LilyCalcs
  */
 
-public class Problem4 {
+public class Problem004 {
 	public static void main(String[] args) throws Exception{
 
 		// stores largest palindrome
