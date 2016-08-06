@@ -1,7 +1,7 @@
 # Project Euler
-lily.tian
+*lily.tian*
 
-Project Euler is a series of computational challenges hosted online at https://projecteuler.net. Included here are algorithms that solves each of the listed problems on the site.
+Project Euler is a series of computational challenges hosted online at https://projecteuler.net. Included here are algorithms that solve each of the listed problems on the site.
 
 These solutions are for personal archival purposes only, and to document my progess in mathematics and java programming. No external sources were consulted in the completion of each problem.
 
