@@ -25,6 +25,21 @@ public class LilyCalcs {
 			throw new Exception("Number must be positive.");
 	}
 
+	// checks if number is prime (with negative numbers)
+	public static boolean isPrimeN(int x) {
+		if (x > 1) {
+			boolean isprime = true;
+			for (int i = 2; i < x; i++) {
+				if (x % i == 0) {
+					isprime = false;
+					break;
+				}
+			}
+			return isprime;
+		} else
+			return false;
+	}
+
 	// checks if string is palindrome
 	public static boolean isPalindrome(String s) throws Exception {
 		int n = s.length();
@@ -63,7 +78,7 @@ public class LilyCalcs {
 	public static int toInt(double d) {
 		return (int) d;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 
 		LilyCalcs calc = new LilyCalcs();
