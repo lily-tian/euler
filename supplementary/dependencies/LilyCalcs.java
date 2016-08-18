@@ -40,6 +40,27 @@ public class LilyCalcs {
 			return false;
 	}
 
+	// returns boolean array of all prime numbers less than n
+	public static boolean[] allPrime(int n) {
+
+		// sets up array of all numbers to look through
+		boolean[] isPrime = new boolean[n];
+		for (int i = 2; i < n; i++)
+			isPrime[i] = true;
+
+		// clears all multiples
+		for (int i = 2; i < n; i++) {
+			if (isPrime[i]) {
+				for (int j = 2; j * i < n; j++) {
+					int multiple = i * j;
+					isPrime[multiple] = false;
+				}
+			}
+		}
+
+		return isPrime;
+	}
+
 	// checks if string is palindrome
 	public static boolean isPalindrome(String s) throws Exception {
 		int n = s.length();
@@ -54,6 +75,84 @@ public class LilyCalcs {
 			return ispalindrome;
 		} else
 			throw new Exception("String must be at least one character long.");
+	}
+
+	// gets all factors of a number
+	public static Queue<Integer> getFactors(int n) {
+		Queue<Integer> q = new Queue<Integer>();
+		for (int i = 2; i <= n; i++)
+			if (n % i == 0)
+				q.enqueue(i);
+		return q;
+	}
+
+	// returns lowest factor
+	public static int LF(int n) {
+		int lf = 0;
+		for (int i = 2; i <= n; i++) {
+			if (n % i == 0) {
+				lf = i;
+				break;
+			}
+		}
+		return lf;
+	}
+
+	// breaks number into factors
+	public static Queue<Integer> factorization(int n) {
+		Queue<Integer> q = new Queue<Integer>();
+		while (n > 1) {
+			q.enqueue(LF(n));
+			n = n / LF(n);
+		}
+		return q;
+	}
+
+	// simplfies fraction
+	public static int[] simplifyF(int n, int d) {
+		Queue<Integer> nfact = factorization(n);
+		Queue<Integer> dfact = factorization(d);
+		if (!nfact.isEmpty() && !dfact.isEmpty()) {
+			int nf = nfact.dequeue();
+			int df = dfact.dequeue();
+			while (true) {
+				if (nf == df) {
+					n /= nf;
+					d /= df;
+					if (!nfact.isEmpty() && !dfact.isEmpty()) {
+						nf = nfact.dequeue();
+						df = dfact.dequeue();
+					} else
+						break;
+				} else if (nf > df) {
+					if (!dfact.isEmpty())
+						df = dfact.dequeue();
+					else
+						break;
+				} else {
+					if (!nfact.isEmpty())
+						nf = nfact.dequeue();
+					else
+						break;
+				}
+			}
+		}
+		int[] nd = { n, d };
+		return nd;
+	}
+
+	// checks if every digit in number is unique (excludes zero)
+	public boolean unique(int n) {
+		String s = "" + n;
+		boolean[] digit = new boolean[s.length() + 1];
+		for (int i = 0; i < s.length(); i++) {
+			int index = Character.getNumericValue(s.charAt(i));
+			digit[index] = true;
+		}
+		boolean all = true;
+		for (int i = 1; i < digit.length; i++)
+			all &= digit[i];
+		return all;
 	}
 
 	// converts character to integer
