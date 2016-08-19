@@ -1,5 +1,5 @@
 /* Author: lily.tian
- * Lily Calcs
+ * LilyCalcs
  * 
  * Compilation of simple calculations.
  * 
@@ -7,6 +7,95 @@
  */
 
 public class LilyCalcs {
+
+	// creates a decimal array of number with specific decimal places
+	public static int[] getDecimal(int n, int size) throws Exception {
+		int[] decimal = new int[size];
+		String s = "" + n;
+		if (s.length() <= size) {
+			for (int i = 0; i < s.length(); i++) {
+				char c = s.charAt(s.length() - 1 - i);
+				decimal[i] = Character.getNumericValue(c);
+			}
+		} else
+			throw new Exception("Array size too small.");
+		return decimal;
+	}
+
+	// creates a decimal array of number
+	public static int[] getDecimal(int n) {
+		String s = "" + n;
+		int[] decimal = new int[s.length()];
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(s.length() - 1 - i);
+			decimal[i] = Character.getNumericValue(c);
+		}
+		return decimal;
+	}
+
+	// performs addition on two decimal arrays
+	public static int[] dAdd(int[] decimal, int[] add) {
+
+		for (int i = 0; i < add.length; i++)
+			decimal[i] += add[i];
+		for (int i = 0; i < decimal.length - 1; i++) {
+			decimal[i + 1] += (decimal[i] / 10);
+			decimal[i] %= 10;
+		}
+
+		decimal[decimal.length - 1] %= 10;
+		return decimal;
+	}
+
+	// performs decimal addition on two numbers
+	public static int[] dAdd(int n1, int n2) {
+		return dAdd(getDecimal(n1), getDecimal(n2));
+	}
+
+	// performs decimal addition on two numbers with specific size
+	public static int[] dAdd(int n1, int n2, int size) throws Exception {
+		return dAdd(getDecimal(n1, size), getDecimal(n2, size));
+	}
+
+	// performs multiplication on two decimal arrays
+	public static int[] dMulti(int[] decimal, int[] multi) {
+
+		int[] sum = new int[decimal.length];
+		for (int i = 0; i < multi.length; i++) {
+			int[] temp = new int[decimal.length];
+			for (int j = 0; j + i < decimal.length; j++) {
+				temp[j + i] = decimal[j] * multi[i];
+			}
+			for (int j = 0; j < decimal.length - 1; j++) {
+				temp[j + 1] += (temp[j] / 10);
+				temp[j] %= 10;
+			}
+			temp[decimal.length - 1] %= 10;
+			sum = dAdd(sum, temp);
+		}
+		return sum;
+	}
+
+	// performs decimal multiplication on two numbers
+	public static int[] dMulti(int n1, int n2) {
+		return dMulti(getDecimal(n1), getDecimal(n2));
+	}
+
+	// performs decimal multiplication on two numbers with specific size
+	public static int[] dMulti(int n1, int n2, int size) throws Exception {
+		return dMulti(getDecimal(n1, size), getDecimal(n2, size));
+	}
+
+	public static String dString(int[] decimal) {
+		String s = "";
+		for (int i = decimal.length - 1; i >= 0; i--)
+			s += decimal[i];
+		return s;
+	}
+
+	public static int dInt(int[] decimal) {
+		return Integer.parseInt(dString(decimal));
+	}
 
 	// checks if number is prime
 	public static boolean isPrime(int x) throws Exception {
@@ -185,7 +274,7 @@ public class LilyCalcs {
 		boolean y = calc.isPalindrome("heh");
 
 		// prints answer
-		System.out.println(x + " " + y);
+		System.out.println(calc.dString(calc.dMulti(12, 1442, 10)));
 
 	}
 }
