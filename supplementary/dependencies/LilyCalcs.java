@@ -22,6 +22,19 @@ public class LilyCalcs {
 		return decimal;
 	}
 
+	// creates a decimal array of string with specific decimal places
+	public static int[] getDecimal(String s, int size) throws Exception {
+		int[] decimal = new int[size];
+		if (s.length() <= size) {
+			for (int i = 0; i < s.length(); i++) {
+				char c = s.charAt(s.length() - 1 - i);
+				decimal[i] = Character.getNumericValue(c);
+			}
+		} else
+			throw new Exception("Array size too small.");
+		return decimal;
+	}
+
 	// creates a decimal array of number
 	public static int[] getDecimal(int n) {
 		String s = "" + n;
@@ -29,6 +42,34 @@ public class LilyCalcs {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(s.length() - 1 - i);
 			decimal[i] = Character.getNumericValue(c);
+		}
+		return decimal;
+	}
+
+	// reverses array
+	public static int[] reverseArray(int[] a) {
+		int[] newa = new int[a.length];
+		for (int i = 0; i < a.length; i++) {
+			newa[i] = a[a.length - 1 - i];
+		}
+		return newa;
+	}
+
+	// reverses string
+	public static String reverseString(String s) {
+		String newstring = "";
+		for (int i = 0; i < s.length(); i++) {
+			newstring += s.charAt(s.length() - 1 - i);
+		}
+		return newstring;
+	}
+
+	// creates array of number
+	public static int[] toArray(int n) {
+		String s = "" + n;
+		int[] decimal = new int[s.length()];
+		for (int i = 0; i < s.length(); i++) {
+			decimal[i] = Character.getNumericValue(s.charAt(i));
 		}
 		return decimal;
 	}
@@ -166,6 +207,69 @@ public class LilyCalcs {
 			throw new Exception("String must be at least one character long.");
 	}
 
+	// returns combination of a number (smaller numbers)
+	public static int c(int n, int k) {
+		return (factorial(n) / factorial(k) / factorial(n - k));
+	}
+
+	// returns combination of a number using factorization (big numbers)
+	public static long nCrf(int n, int r, int b) {
+		int[] nfactors = new int[n + 1];
+		int[] rfactors = new int[r + 1];
+		for (int i = n; i > n - r; i--) {
+			Queue<Integer> q = factorization(i);
+			while (!q.isEmpty())
+				nfactors[q.dequeue()]++;
+		}
+		for (int i = r; i > 1; i--) {
+			Queue<Integer> q = factorization(i);
+			while (!q.isEmpty())
+				rfactors[q.dequeue()]++;
+		}
+		for (int i = 0; i < rfactors.length; i++)
+			while (rfactors[i] > 0) {
+				nfactors[i]--;
+				rfactors[i]--;
+			}
+		long cnr = 1;
+		for (int i = 0; i < nfactors.length; i++) {
+			while (nfactors[i] > 0) {
+				if (cnr * i < b) {
+					cnr *= i;
+					nfactors[i]--;
+				} else
+					return -1;
+			}
+		}
+		return cnr;
+	}
+
+	// returns factorial of a number
+	public static int factorial(int n) {
+		if (n > 1)
+			return n * factorial(n - 1);
+		else
+			return 1;
+	}
+
+	// returns factorial of a number
+	public static long factorial(long n) {
+		if (n > 1L)
+			return n * factorial(n - 1);
+		else
+			return 1L;
+	}
+
+	// returns factorial of a number up to k
+	public static long truncfact(long n, long k) {
+		long f = 0;
+		while (n > k) {
+			f *= n;
+			n--;
+		}
+		return f;
+	}
+
 	// gets all factors of a number
 	public static Queue<Integer> getFactors(int n) {
 		Queue<Integer> q = new Queue<Integer>();
@@ -267,14 +371,48 @@ public class LilyCalcs {
 		return (int) d;
 	}
 
+	// checks if numbers are permutations of one another
+	public static boolean isPerm(int ii, int jj) {
+
+		// finds frequency of every digit
+		String si = "" + ii;
+		String sj = "" + jj;
+		int[] ai = new int[10];
+		int[] aj = new int[10];
+		for (int i = 0; i < si.length(); i++) {
+			ai[Character.getNumericValue(si.charAt(i))]++;
+			aj[Character.getNumericValue(sj.charAt(i))]++;
+		}
+
+		// checks permutation
+		boolean permutations = true;
+		for (int i = 0; i < ai.length; i++) {
+			if (ai[i] != aj[i]) {
+				permutations = false;
+				break;
+			}
+		}
+		return permutations;
+	}
+
+	// coverts array to string
+	public static String toString(int[] a) {
+		String s = "";
+		for (int i = 0; i < s.length(); i++)
+			s += a[i];
+		return s;
+	}
+
+	public static int toInt(int[] a) {
+		return Integer.parseInt(toString(a));
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		LilyCalcs calc = new LilyCalcs();
-		boolean x = calc.isPrime(2);
-		boolean y = calc.isPalindrome("heh");
 
 		// prints answer
-		System.out.println(calc.dString(calc.dMulti(12, 1442, 10)));
+		System.out.println("");
 
 	}
 }
