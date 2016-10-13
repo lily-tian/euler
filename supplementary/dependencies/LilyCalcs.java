@@ -6,7 +6,37 @@
  * Note: Remember to throw Exceptions!
  */
 
+import java.util.HashSet;
+
 public class LilyCalcs {
+
+	private Queue<String> q;
+	private HashSet<String> h;
+
+	public LilyCalcs() {
+
+	}
+
+	private void getC(String s, int nc, int rc, int n, int r) {
+		if (nc < n && rc != r) {
+			nc++;
+			getC(s, nc, rc, n, r);
+			rc++;
+			getC(s + " " + nc, nc, rc, n, r);
+		} else if (rc == r) {
+			if (!h.contains(s)) {
+				q.enqueue(s.substring(1));
+				h.add(s.substring(1));
+			}
+		}
+	}
+
+	public Queue<String> getCombos(int n, int r) {
+		this.q = new Queue<String>();
+		this.h = new HashSet<String>();
+		getC("", 0, 0, n, r);
+		return q;
+	}
 
 	// creates a decimal array of number with specific decimal places
 	public static int[] getDecimal(int n, int size) throws Exception {
@@ -134,6 +164,22 @@ public class LilyCalcs {
 		return s;
 	}
 
+	public static String cutZero(int[] a) {
+		String s = dString(a);
+		return cutZero(s);
+	}
+
+	public static String cutZero(String s) {
+		int zeroEnd = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != '0') {
+				zeroEnd = i;
+				break;
+			}
+		}
+		return s.substring(zeroEnd);
+	}
+
 	public static int dInt(int[] decimal) {
 		return Integer.parseInt(dString(decimal));
 	}
@@ -144,7 +190,24 @@ public class LilyCalcs {
 			return false;
 		if (x > 1) {
 			boolean isprime = true;
-			for (int i = 2; i < x; i++) {
+			for (int i = 2; i <= x / i; i++) {
+				if (x % i == 0) {
+					isprime = false;
+					break;
+				}
+			}
+			return isprime;
+		} else
+			throw new Exception("Number must be positive.");
+	}
+
+	// checks if number is prime
+	public static boolean isPrime(long x) throws Exception {
+		if (x == 1L)
+			return false;
+		if (x > 1L) {
+			boolean isprime = true;
+			for (long i = 2L; i <= x / i; i++) {
 				if (x % i == 0) {
 					isprime = false;
 					break;
@@ -159,7 +222,7 @@ public class LilyCalcs {
 	public static boolean isPrimeN(int x) {
 		if (x > 1) {
 			boolean isprime = true;
-			for (int i = 2; i < x; i++) {
+			for (int i = 2; i <= x / i; i++) {
 				if (x % i == 0) {
 					isprime = false;
 					break;
@@ -301,6 +364,27 @@ public class LilyCalcs {
 		return q;
 	}
 
+	// relatively prime
+	public static boolean rprime(int n, int m) {
+		boolean rprime = true;
+		Queue<Integer> qn = getFactors(n);
+		Queue<Integer> qm = getFactors(m);
+		int nfact = qn.dequeue();
+		int mfact = qm.dequeue();
+		while (true) {
+			if (nfact == mfact) {
+				rprime = false;
+				break;
+			} else if (nfact > mfact && !qm.isEmpty())
+				mfact = qm.dequeue();
+			else if ((nfact < mfact && !qn.isEmpty()))
+				nfact = qn.dequeue();
+			else
+				break;
+		}
+		return rprime;
+	}
+
 	// simplfies fraction
 	public static int[] simplifyF(int n, int d) {
 		Queue<Integer> nfact = factorization(n);
@@ -398,13 +482,51 @@ public class LilyCalcs {
 	// coverts array to string
 	public static String toString(int[] a) {
 		String s = "";
-		for (int i = 0; i < s.length(); i++)
+		for (int i = 0; i < a.length; i++)
 			s += a[i];
 		return s;
 	}
 
 	public static int toInt(int[] a) {
 		return Integer.parseInt(toString(a));
+	}
+
+	public void printDA(int[][] a) {
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[0].length; j++) {
+				System.out.print(a[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	public void printDA(boolean[][] a) {
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[0].length; j++) {
+				if (a[i][j])
+					System.out.print(1 + " ");
+				else
+					System.out.print(0 + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	public void printD(int[] a) {
+		for (int i = 0; i < a.length; i++) {
+			System.out.print(a[i] + " ");
+		}
+		System.out.println();
+	}
+
+	public void printD(boolean[] a) {
+		for (int i = 0; i < a.length; i++) {
+			if (a[i])
+				System.out.print(1);
+			else
+				System.out.print(0);
+		}
+		System.out.println();
 	}
 
 	public static void main(String[] args) throws Exception {
