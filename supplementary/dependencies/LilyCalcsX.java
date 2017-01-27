@@ -6,13 +6,15 @@
  * Note: Remember to throw Exceptions!
  */
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class LilyCalcsX {
 
-	private ArrayList<String> q;
+	private ArrayList<String[]> q;
+	private ArrayList<int[]> intAL;
 	private HashSet<String> h;
 
 	public LilyCalcsX() {
@@ -26,17 +28,59 @@ public class LilyCalcsX {
 			getC(s + " " + nc, nc, rc, n, r);
 		} else if (rc == r) {
 			if (!h.contains(s)) {
-				q.add(s.substring(1));
+				q.add(s.substring(1).split(" "));
 				h.add(s.substring(1));
 			}
 		}
 	}
 
-	public ArrayList<String> getCombos(int n, int r) {
-		this.q = new ArrayList<String>();
+	public ArrayList<String[]> getCombos(int n, int r) {
+		this.q = new ArrayList<String[]>();
 		this.h = new HashSet<String>();
 		getC("", 0, 0, n, r);
 		return q;
+	}
+
+	private void getP(String s, LinkedList<Integer> num, int n, int r) {
+		if (num.size() > n - r) {
+			for (int i = 0; i < num.size(); i++) {
+				LinkedList<Integer> newnum = (LinkedList) num.clone();
+				getP(s + " " + newnum.remove(i), newnum, n, r);
+			}
+		} else {
+			q.add(s.substring(1).split(" "));
+		}
+	}
+
+	public ArrayList<String[]> getPerm(int n, int r) {
+		this.q = new ArrayList<String[]>();
+		LinkedList<Integer> num = new LinkedList<Integer>();
+		for (int i = 0; i < n; i++) {
+			num.add(i);
+		}
+		getP("", num, n, r);
+		return q;
+	}
+
+	private void getPD(ArrayList<Integer> s, int start, int n, int r) {
+		if (s.size() < r) {
+			for (int i = start; i < n; i++) {
+				ArrayList<Integer> next = (ArrayList<Integer>) s.clone();
+				next.add(i);
+				getPD(next, start, n, r);
+			}
+		} else {
+			int[] a = new int[s.size()];
+			for (int i = 0; i < a.length; i++)
+				a[i] = s.get(i);
+			intAL.add(a);
+		}
+	}
+
+	public ArrayList<int[]> getPermD(int n, int r) {
+		this.intAL = new ArrayList<int[]>();
+		getPD(new ArrayList<Integer>(), 0, n, r);
+		return intAL;
 	}
 
 	// creates a decimal array of number with specific decimal places
@@ -452,59 +496,34 @@ public class LilyCalcsX {
 		// finds frequency of every digit
 		String si = "" + ii;
 		String sj = "" + jj;
+		if (si.length() != sj.length())
+			return false;
 		int[] ai = new int[10];
 		int[] aj = new int[10];
 		for (int i = 0; i < si.length(); i++) {
 			ai[Character.getNumericValue(si.charAt(i))]++;
 			aj[Character.getNumericValue(sj.charAt(i))]++;
 		}
-
-		// checks permutation
-		boolean permutations = true;
-		for (int i = 0; i < ai.length; i++) {
-			if (ai[i] != aj[i]) {
-				permutations = false;
-				break;
-			}
-		}
-		return permutations;
+		return Arrays.equals(ai, aj);
 	}
 
-	public void printDA(int[][] a) {
-		for (int i = 0; i < a.length; i++) {
-			for (int j = 0; j < a[0].length; j++) {
-				System.out.print(a[i][j] + " ");
-			}
+	public static <E> void printDA(E[][] a) {
+		for (E[] row : a) {
+			for (E item : row)
+				System.out.print(item + " ");
 			System.out.println();
 		}
 	}
 
-	public void printDA(boolean[][] a) {
-		for (int i = 0; i < a.length; i++) {
-			for (int j = 0; j < a[0].length; j++) {
-				if (a[i][j])
-					System.out.print(1 + " ");
-				else
-					System.out.print(0 + " ");
-			}
-			System.out.println();
-		}
-	}
-
-	public void printD(int[] a) {
-		for (int i = 0; i < a.length; i++) {
-			System.out.print(a[i] + " ");
-		}
+	public static <E> void printA(E[] a) {
+		for (E item : a)
+			System.out.print(item + " ");
 		System.out.println();
 	}
 
-	public void printD(boolean[] a) {
-		for (int i = 0; i < a.length; i++) {
-			if (a[i])
-				System.out.print(1);
-			else
-				System.out.print(0);
-		}
+	public static void printPA(int[] a) {
+		for (int item : a)
+			System.out.print(item + " ");
 		System.out.println();
 	}
 
